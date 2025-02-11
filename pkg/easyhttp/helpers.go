@@ -1,7 +1,9 @@
 package easyhttp
 
 import (
+	"fmt"
 	"math/rand"
+	"net/url"
 	"strings"
 )
 
@@ -25,4 +27,25 @@ func NormalizeURL(url string) string {
 		url = "https://" + url
 	}
 	return url
+}
+
+func BuildQueryString(params map[string]any) string {
+	if len(params) == 0 {
+		return ""
+	}
+
+	values := url.Values{}
+
+	for key, value := range params {
+		switch v := value.(type) {
+		case []string:
+			for _, item := range v {
+				values.Add(key+"[]", item)
+			}
+		default:
+			values.Add(key, fmt.Sprint(v))
+		}
+	}
+
+	return values.Encode()
 }
