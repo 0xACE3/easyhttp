@@ -49,3 +49,11 @@ func BuildQueryString(params map[string]any) string {
 
 	return values.Encode()
 }
+
+func convertHeaders(headers map[string]string) map[string][]string {
+	converted := make(map[string][]string)
+	for k, v := range headers {
+		converted[k] = []string{v}
+	}
+	return converted
+}

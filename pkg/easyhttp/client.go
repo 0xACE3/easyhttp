@@ -6,63 +6,22 @@ import (
 	"log"
 	"net/http"
 	"strings"
-	"sync"
-	"time"
 
 	"github.com/imroc/req/v3"
 	"golang.org/x/sync/semaphore"
 )
 
-type ClientConfig struct {
-	Timeout        time.Duration
-	MaxConcurrency int64
-	Proxy          string
-	RetryCount     int
-	RetryWait      time.Duration
-	RetryMaxWait   time.Duration
-	BrowserType    BrowserType
-	IsDebug        bool
-}
-
-type ApiClient struct {
-	baseUrl string
-	client  *req.Client
-	config  *ClientConfig
-	sema    *semaphore.Weighted
-	mutx    sync.Mutex
-}
-
-type APIError struct {
-	Message string
-	Status  int
-}
-
-func (e *APIError) Error() string {
-	return fmt.Sprintf("API error: %s", e.Message)
-}
-
-func NewDefaultClientConfig() *ClientConfig {
-	return &ClientConfig{
-		Timeout:        30 * time.Second,
-		MaxConcurrency: 5,
-		RetryCount:     3,
-		RetryWait:      2 * time.Second,
-		RetryMaxWait:   5 * time.Second,
-		BrowserType:    GetRandomBrowserType(),
-		IsDebug:        false,
-	}
-}
-
 func NewApiClient(url string, config *ClientConfig) *ApiClient {
 
 	if config == nil {
-		config = NewDefaultClientConfig()
+		config = DefaultClientConfig()
 	}
 
 	client := &ApiClient{
 		baseUrl: NormalizeURL(url),
 		config:  config,
 		sema:    semaphore.NewWeighted(config.MaxConcurrency),
+		wsConns: make(map[string]*WebSocketClient),
 	}
 
 	client.initialize()

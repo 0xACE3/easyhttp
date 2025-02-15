@@ -3,6 +3,7 @@ module github.com/0xace3/easyhttp
 go 1.22.0
 
 require (
+	github.com/gorilla/websocket v1.5.3
 	github.com/imroc/req/v3 v3.49.1
 	golang.org/x/sync v0.11.0
 )

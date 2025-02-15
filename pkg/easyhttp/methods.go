@@ -26,6 +26,10 @@ func (c *ApiClient) Delete(ctx context.Context, endpoint string, result interfac
 	return c.request(ctx, http.MethodDelete, endpoint, nil, result, headers)
 }
 
+func (c *ApiClient) ConnectWebSocket(ctx context.Context, wsUrl string, headers map[string]string) (*WebSocketClient, error) {
+	return c.newWebSocket(ctx, wsUrl, headers)
+}
+
 func (c *ApiClient) GetRaw(ctx context.Context, endpoint string, headers map[string]string) (*req.Response, error) {
 	if err := c.sema.Acquire(ctx, 1); err != nil {
 		return nil, err
