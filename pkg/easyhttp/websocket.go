@@ -156,3 +156,15 @@ func (ws *WebSocketClient) Close() error {
 
 	return err
 }
+
+
+func (c *ApiClient) RemoveClosedWebSockets() {
+	c.mutx.Lock()
+	defer c.mutx.Unlock()
+
+	for url, ws := range c.wsConns {
+		if ws.closed {
+			delete(c.wsConns, url)
+		}
+	}
+}
