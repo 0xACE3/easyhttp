@@ -10,19 +10,19 @@ import (
 	"github.com/imroc/req/v3"
 )
 
-func (c *ApiClient) Get(ctx context.Context, endpoint string, result interface{}, headers map[string]string) error {
+func (c *ApiClient) Get(ctx context.Context, endpoint string, result any, headers map[string]string) error {
 	return c.request(ctx, http.MethodGet, endpoint, nil, result, headers)
 }
 
-func (c *ApiClient) Post(ctx context.Context, endpoint string, payload interface{}, result interface{}, headers map[string]string) error {
+func (c *ApiClient) Post(ctx context.Context, endpoint string, payload any, result any, headers map[string]string) error {
 	return c.request(ctx, http.MethodPost, endpoint, payload, result, headers)
 }
 
-func (c *ApiClient) Put(ctx context.Context, endpoint string, payload interface{}, result interface{}, headers map[string]string) error {
+func (c *ApiClient) Put(ctx context.Context, endpoint string, payload any, result any, headers map[string]string) error {
 	return c.request(ctx, http.MethodPut, endpoint, payload, result, headers)
 }
 
-func (c *ApiClient) Delete(ctx context.Context, endpoint string, result interface{}, headers map[string]string) error {
+func (c *ApiClient) Delete(ctx context.Context, endpoint string, result any, headers map[string]string) error {
 	return c.request(ctx, http.MethodDelete, endpoint, nil, result, headers)
 }
 

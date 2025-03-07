@@ -57,7 +57,7 @@ func (api *ApiClient) initialize() {
 	api.client = client
 }
 
-func (api *ApiClient) request(ctx context.Context, method, endpoint string, payload interface{}, result interface{}, headers map[string]string) error {
+func (api *ApiClient) request(ctx context.Context, method, endpoint string, payload any, result any, headers map[string]string) error {
 
 	if api.client == nil {
 		return fmt.Errorf("client is not initialized")
@@ -75,7 +75,7 @@ func (api *ApiClient) request(ctx context.Context, method, endpoint string, payl
 
 }
 
-func (api *ApiClient) makeRequest(ctx context.Context, method, url string, payload interface{}, result interface{}, headers map[string]string) error {
+func (api *ApiClient) makeRequest(ctx context.Context, method, url string, payload any, result any, headers map[string]string) error {
 
 	attempt := 0
 	maxAttempts := api.config.RetryCount

@@ -2,6 +2,7 @@ package easyhttp
 
 import (
 	"fmt"
+	"net/http"
 	"sync"
 	"time"
 
@@ -30,12 +31,13 @@ type WebSocketConfig struct {
 }
 
 type WebSocketClient struct {
-	conn     *websocket.Conn
-	messages chan []byte
-	done     chan struct{}
-	closed   bool
-	mutx     sync.RWMutex
-	wg       sync.WaitGroup
+	conn        *websocket.Conn
+	messages    chan []byte
+	done        chan struct{}
+	closed      bool
+	RespHeaders http.Header
+	mutx        sync.Mutex
+	wg          sync.WaitGroup
 }
 
 type ApiClient struct {
