@@ -24,8 +24,8 @@ func (c *ApiClient) newWebSocket(ctx context.Context, wsUrl string, headers map[
 		EnableCompression: c.config.WSConfig.EnableCompression,
 	}
 
-	if c.config.Proxy != "" {
-		proxyURL, err := url.Parse(c.config.Proxy)
+	if c.config.WsProxy != "" {
+		proxyURL, err := url.Parse(c.config.WsProxy)
 		if err != nil {
 			return nil, fmt.Errorf("invalid proxy URL: %v", err)
 		}

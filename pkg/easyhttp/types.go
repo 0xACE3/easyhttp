@@ -15,6 +15,7 @@ type ClientConfig struct {
 	Timeout        time.Duration
 	MaxConcurrency int64
 	Proxy          string
+	WsProxy        string
 	RetryCount     int
 	RetryWait      time.Duration
 	RetryMaxWait   time.Duration
